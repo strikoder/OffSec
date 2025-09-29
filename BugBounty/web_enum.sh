@@ -47,6 +47,10 @@ dnsx -silent -l $url/recon/final.txt > $url/recon/httprobe/resolved.txt
 echo "[+] Probing HTTP services with httpx..."
 httpx -silent -l $url/recon/httprobe/resolved.txt | sed 's|https\?://||g' | sort -u > $url/recon/httprobe/alive.txt
 
+echo "========================================"
+echo "Hint: search for stag, admin, dev, test in alive.txt"
+echo "========================================"
+
 # === [ Subdomain Takeover Check ] ===
 echo "[+] Checking for subdomain takeover with subjack..."
 subjack -w $url/recon/httprobe/alive.txt -t 100 -timeout 30 -ssl \
@@ -84,8 +88,10 @@ while read line; do
 done < $url/recon/wayback/wayback_output.txt
 
 # === [ Port Scanning ] ===
-echo "[+] Scanning ports with nmap..."
-nmap -iL $url/recon/httprobe/alive.txt -T4 -oA $url/recon/scans/scanned
+#echo "[+] Scanning ports with nmap..."
+# nmap -iL $url/recon/httprobe/alive.txt -T4 -oA $url/recon/scans/scanned
+echo "[+] Scanning ports with nmap is commented out for time purposes, if you have time, uncomment and let it scans..."
+
 
 # === [ Screenshots ] ===
 echo "[+] Capturing screenshots with GoWitness..."
